@@ -1,0 +1,28 @@
+class node:
+    def __init__(self):
+        self.data = None
+        self.next = None
+    
+class linked_list:
+    def __init__(self):
+        self.at_the_node = None
+    
+    def add_node(self, data):
+        new_node = node()
+        new_node.data = data
+        new_node.next = self.at_the_node
+        self.at_the_node = new_node
+
+    def print_list(self):
+        node = self.at_the_node
+        while node:
+            print(node.data)
+            node = node.next
+
+linked_list = linked_list()
+linked_list.add_node(4)
+linked_list.add_node(8)
+linked_list.add_node(1)
+linked_list.add_node(5)
+
+linked_list.print_list()

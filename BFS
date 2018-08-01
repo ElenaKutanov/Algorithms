@@ -1,0 +1,51 @@
+from collections import deque
+
+def get_path(visited_pairs, end_node):
+    path = deque()
+    
+    current_node = end_node
+    while current_node:
+        path.appendleft(current_node)
+        current_node = visited_pairs[current_node]
+        
+    return list(path)
+
+def find_short_route(graph, sender, recipient):
+    if sender not in graph:
+        raise Exception("xxx")
+    
+    if recipient not in graph:
+        raise Exception("yyy")
+    
+    nodes_to_visit = deque()
+    nodes_to_visit.append(sender)
+    
+    visited_pairs = {sender:None}
+        
+    while len(nodes_to_visit)>0:
+        current_node = nodes_to_visit.popleft()
+        
+        if current_node == recipient:
+            return get_path(visited_pairs, recipient)
+            
+        for neighbor in graph[current_node]:
+            if neighbor not in visited_pairs:
+                nodes_to_visit.append(neighbor)
+                visited_pairs[neighbor] = current_node
+    
+    return None
+
+network = {
+    'Min'     : ['William', 'Jayden', 'Omar'],
+    'William' : ['Min', 'Noam'],
+    'Jayden'  : ['Min', 'Amelia', 'Ren', 'Noam'],
+    'Ren'     : ['Jayden', 'Omar'],
+    'Amelia'  : ['Jayden', 'Adam', 'Miguel'],
+    'Adam'    : ['Amelia', 'Miguel', 'Sofia', 'Lucas'],
+    'Miguel'  : ['Amelia', 'Adam', 'Liam', 'Nathan'],
+    'Noam'    : ['Nathan', 'Jayden', 'William'],
+    'Omar'    : ['Ren', 'Min', 'Scott']
+}
+
+print("Result:", find_short_route(network, 'Jayden', 'Adam'))
+

@@ -1,0 +1,21 @@
+def merge_ranges(meetings_list):
+    
+    sorted_meetings_list = sorted(meetings_list)
+    
+    result_ranges = [sorted_meetings_list[0]]
+    
+    for meeting_start, meeting_end in sorted_meetings_list[1:]:
+        last_start, last_end = result_ranges[-1]
+        
+        if meeting_start <= last_end:
+            result_ranges[-1] = (last_start, max(meeting_end, last_end))
+        else:
+            result_ranges.append((meeting_start, meeting_end))
+    
+    return result_ranges
+
+test_meetings =   [(0, 1), (3, 5), (4, 8), (10, 12), (9, 10)]
+#test_meetings = [(1, 10), (2, 6), (3, 5), (7, 9)]
+
+print("Should be:", [(0, 1), (3, 8), (9, 12)])
+print(merge_ranges(test_meetings))

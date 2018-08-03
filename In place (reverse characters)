@@ -1,0 +1,14 @@
+def reverse_characters(ch):
+    temp = ch[0]
+    length = len(ch)
+    
+    for i in range(length):
+        ch[i] = ch[length-1-i]
+    
+    ch[length-1] = temp
+    
+
+test = ["s", "d", "f"]
+
+reverse_characters(test)
+print(test)

@@ -1,0 +1,17 @@
+def rank(sc_list, h_sc):
+    length = len(sc_list)
+    count = [0]*(h_sc+1)
+    
+    for sc in sc_list:
+        count[sc] += 1
+    
+    sorted_sc_list = []
+    for i, value in enumerate(count):
+        for _ in range(value):
+            sorted_sc_list.append(i)
+    
+    return list(reversed(sorted_sc_list))
+        
+test = [1, 90, 90, 0, 71, 100]
+
+print(rank(test, 100))

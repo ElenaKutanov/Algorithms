@@ -1,0 +1,23 @@
+def word_cloud(in_str):
+    words = {}
+    i_left = 0
+    exclude = ['\'' , '-']
+    
+    for i in range(len(in_str)+1):
+        if (i == len(in_str)) or (not in_str[i].isalpha() and in_str[i] not in exclude):
+            word = in_str[i_left:i]
+            
+            if word.istitle():
+                word = word.lower()
+                
+            if word:
+                words[word] = words.get(word, 0) + 1
+
+            i_left = i+1
+    
+    return words
+            
+        
+test = "We came, we saw, WE conquered...then we ate Bill's (Mille-Feuille) cake. The bill came to five dollars"
+
+print(word_cloud(test))

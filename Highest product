@@ -1,0 +1,21 @@
+from functools import reduce
+from math import fabs
+
+def product(int_list):
+    three_best = int_list[:3]
+    three_best.sort(key=lambda x: fabs(x), reverse=True)
+    print(three_best)
+    
+    for integer in int_list[3:]:
+        if fabs(integer) > fabs(three_best[-1]):
+            for i, value in enumerate(three_best):
+                if fabs(integer) > fabs(value):
+                    three_best.insert(i,integer)
+                    break
+            del three_best[-1]
+    
+    return reduce(lambda x, y: y*x, three_best)
+
+test = [1, -1, -10, -10, 1, 3, 2]
+
+print(product(test))

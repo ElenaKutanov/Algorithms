@@ -1,0 +1,48 @@
+def get_start_point(words):
+    if len(words)<2:
+        raise ValueError("xxx")
+    
+    top = len(words)-1
+    bottom = 0
+    start = words[0]
+    
+    point = None
+    
+    while bottom < top:
+        mid = bottom + (top - bottom) // 2
+        print("mid:", mid)
+        print("bottom:", bottom)
+        print("top:", top)
+
+        end = words[top]
+        point = words[mid]
+        
+        if (point < start) and (point < end):
+            top = mid
+        else:
+            bottom = mid
+
+        if bottom+1 == top:
+            return top, words[top]
+        
+    return None
+
+test = [
+    'ptolemaic',
+    'retrograde',
+    'supplant',
+    'undulate',
+    'xenoepist',
+    'asymptote',  # <-- rotates here!
+    'babka',
+    'banoffee',
+    'engender',
+    'karpatka',
+    'othellolagkage',
+    "papa-para",
+    "popa-para",
+    "pupu-pury",
+
+]
+
+print(get_start_point(test))

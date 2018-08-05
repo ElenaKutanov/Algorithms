@@ -6,8 +6,16 @@ def shuffle(in_list):
         in_list[i] = in_list[i_rand]
         in_list[i_rand] = song
 
+def shuffle_2(in_list):
+    length = len(in_list)
+    
+    for i in range(length):
+        i_rand = random.randrange(length)
+        if i != m_rand:
+            in_list[i], in_list[i_rand] = in_list[i_rand], in_list[i]
+
 test = [1, 2, 4, 3, 4, 5]
 
 print(test)
-shuffle(test)
+shuffle_2(test)
 print(test)

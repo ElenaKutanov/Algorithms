@@ -1,0 +1,62 @@
+def is_superbalanced(graph, root):
+    if not graph:
+        return True
+    
+    node_and_bound_stack = [(root, -float('inf'), float('inf'))]
+    
+    while node_and_bound_stack:
+        node, lower, upper = node_and_bound_stack.pop()
+        print("node:", node.value)
+        print("node.left:", node.left)
+        print("node.right:", node.right)
+        print("lower:", lower)
+        print("upper:", upper)
+        
+        if node.value<lower or node.value>upper:
+            return False
+        
+        if node.left:
+            node_and_bound_stack.append((node.left, lower, node.value))
+            
+        if node.right:
+            node_and_bound_stack.append((node.right, node.value, upper))
+    
+    return True
+    
+class BinaryTreeNode(object):
+
+    def __init__(self, value):
+        self.value = value
+        self.left  = None
+        self.right = None
+
+    def insert_left(self, node):
+        self.left = node
+        return self.left.left
+
+    def insert_right(self, node):
+        self.right = node
+        return self.right.right
+    
+node_1 = BinaryTreeNode(1)
+node_5 = BinaryTreeNode(5)
+node_6 = BinaryTreeNode(6)
+
+node_2 = BinaryTreeNode(2)
+node_2.insert_left(node_1)
+
+node_4 = BinaryTreeNode(4)
+node_4.insert_right(node_5)
+
+node_3 = BinaryTreeNode(3)
+node_3.insert_left(node_2)
+node_3.insert_right(node_4)
+
+test = {node_3,
+        node_2,
+        node_4,
+        node_1,
+        node_5,
+        node_6}
+root = node_3
+print(is_superbalanced(test, root))

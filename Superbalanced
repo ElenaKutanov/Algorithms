@@ -1,0 +1,62 @@
+def is_superbalanced(root_node):
+    
+    depths = set()
+    node_stack = [(root_node, 0)]
+    
+    while node_stack:
+        node, depth = node_stack.pop()
+        print("node.value:", node.value)
+        print("depth:", depth)
+        
+        if not node.left and not node.right:
+            depths.add(depth)
+            print("Set:", depths)
+            
+            size = len(depths)
+            if size>2 or (size == 2 and abs(depths.pop()-depths.pop())>1):
+                return False
+            
+        if node.left:
+            node_stack.append((node.left, depth+1))
+
+        if node.right:
+            node_stack.append((node.right, depth+1))
+
+    return True
+    
+class BinaryTree(object):
+
+    def __init__(self, value):
+        self.value = value
+        self.left  = None
+        self.right = None
+
+    def insert_left(self, node):
+        self.left = node
+        return self.left.left
+
+    def insert_right(self, node):
+        self.right = node
+        return self.right.right
+
+node_7 = BinaryTree(7)
+node_8 = BinaryTree(8)
+#node_8.insert_left(node_7)
+    
+node_1 = BinaryTree(1)
+node_1.insert_left(node_8)
+node_5 = BinaryTree(5)
+node_6 = BinaryTree(6)
+
+node_2 = BinaryTree(2)
+node_2.insert_left(node_1)
+
+node_4 = BinaryTree(4)
+node_4.insert_right(node_5)
+
+node_3 = BinaryTree(3)
+node_3.insert_left(node_2)
+node_3.insert_right(node_4)
+
+root = node_3
+print(is_superbalanced(root))

@@ -1,0 +1,34 @@
+def finder(data):
+    
+    floor = 1
+    ceiling = len(data) - 1
+    
+    while floor < ceiling:
+        print("Floor, ceiling:", floor, ceiling)
+        mid = floor + (ceiling-floor) // 2
+        
+        low_floor, low_ceiling = floor, mid
+        upper_floor, upper_ceiling = mid+1, ceiling
+        print("Low floor, low ceiling:", low_floor, low_ceiling)
+        
+        count = 0
+        
+        for item in data:
+            print("Item:", item)
+            if item in range(low_floor, low_ceiling+1):
+                print("Item in range:", item)
+                count += 1
+        print("Count:", count)
+                
+        if count > (low_ceiling - low_floor + 1):
+            floor, ceiling = low_floor, low_ceiling
+        else:
+            floor, ceiling = upper_floor, upper_ceiling
+    
+    return floor
+    
+
+
+data = [1, 1, 5, 2, 6, 7, 8, 3, 4, 9]
+
+print("Result:", finder(data))

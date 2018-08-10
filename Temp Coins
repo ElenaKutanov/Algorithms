@@ -1,0 +1,38 @@
+def get_coins(denoms, amount):
+    results = []
+    
+    while len(denoms) > 0:
+        results.append(recursive_coins(denoms, amount))
+        denoms = denoms[:-1]
+    
+    return results
+
+def recursive_coins(denoms, amount):
+
+    if len(denoms) == 1:
+        print(denoms)
+        return denoms
+    
+    biggest_coin = denoms[-1]
+    
+    surplus = amount%biggest_coin
+    print("surplus:", surplus)
+    last_coins_lists = recursive_coins(denoms[:-1], surplus)
+    print("last_coins_lists:", last_coins_lists)
+    
+    coins_lists = []
+    count = (amount-surplus)//biggest_coin
+    print("amount:", amount)
+    print("count:", count)
+    for i in range(count):
+        coins_lists.append(biggest_coin)
+    
+    if last_coins_lists:
+        last_coins_lists.extend(coins_lists)
+    
+    return last_coins_lists
+
+test_den = [1, 2, 3]
+test_amount = 4
+
+print(get_coins(test_den, test_amount))

@@ -1,0 +1,22 @@
+def recursive_perms(the_string):
+
+    if len(the_string) <= 1:
+        return set([the_string])
+    
+    symbol, the_string = the_string[0], the_string[1:]
+    
+    last_permutations = recursive_perms(the_string)
+    
+    permutations = set()
+        
+    for item in last_permutations:
+        for i in range(len(item) + 1):
+            permutations.add(item[:i] + symbol + item[i:])
+            
+    return permutations
+    
+
+test_string = "ololo"
+print(recursive_perms(test_string))
+
+# {'ololo', 'olool', 'loool', 'oollo', 'olloo', 'oooll', 'oolol', 'loloo', 'loolo', 'llooo'}

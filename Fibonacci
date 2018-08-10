@@ -1,0 +1,24 @@
+def fib(n):
+    if n < 0:
+        raise ValueError('Index was negative')
+        
+    if n <= 1:
+        return n
+    
+    pre_first = 0
+    pre_second = 1
+    
+    for _ in range(n-1):
+        result = pre_first + pre_second
+        pre_first = pre_second
+        pre_second = result
+        
+    return result
+
+    
+print(fib(0))
+print(fib(1))
+print(fib(2))
+print(fib(3))
+print(fib(4))
+print(fib(5))

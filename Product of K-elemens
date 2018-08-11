@@ -1,0 +1,46 @@
+def get_product(the_list, n):
+    if n < 1:
+        raise ValueError('N is less than one!')
+        
+    if len(the_list) < n+1:
+        raise ValueError('Less than n items!')
+        
+    products = [0]*(n)
+    
+    products[0] = (min(the_list[0], the_list[1]),
+                   max(the_list[0], the_list[1]))
+    
+    for i in range(1, n):
+        
+        current = the_list[i]
+
+        products[i] = (products[i-1][0]*current,
+                       products[i-1][0]*current)
+        print("Initial:", products)
+            
+    for index in range(2, len(the_list)):
+        print("index:", index)
+        current = the_list[index]
+        print("current:", current)
+
+        for i in range(n-1, -1, -1):
+            print("product i:", i)
+            lowest  = products[i][0]
+            highest = products[i][1]
+            if i == 0:
+                products[i] = (min(lowest, current),
+                               max(highest, current))
+            else:
+                pre_lowest  = products[i-1][0]
+                pre_highest = products[i-1][1]
+
+                products[i] = (min(lowest, pre_lowest*current, pre_highest*current),
+                               max(highest, pre_lowest*current, pre_highest*current))
+            print(products[i])
+    
+    return products[n-1][1]
+
+test_den = [1, 2, -3, 0, -2, 1, 5]
+test_n = 3
+
+print(get_product(test_den, test_n))

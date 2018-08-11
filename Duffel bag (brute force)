@@ -1,0 +1,46 @@
+from collections import deque
+
+def max_duffel_bag_value(the_list, bag_capacity):
+    
+    if bag_capacity < 1:
+        raise ValueError("The bag is too small!");
+    
+    if the_list[0][0] < 1:
+        raise ValueError("The cake is too light!");
+    
+    value_in_bag = 0
+    
+    best_price = round(the_list[0][1]/the_list[0][0], 2)
+    
+    sorted_cakes = deque([[the_list[0], best_price]])
+    
+    for cake in the_list[1:]:
+        
+        if cake[0] < 1:
+            raise ValueError("The cake is too light!");
+            
+        price = round(cake[1]/cake[0], 2)
+        if price > best_price:
+            sorted_cakes.append([cake, price])
+        else:
+            sorted_cakes.appendleft([cake, price])
+    
+    print("sorted_cakes:", sorted_cakes)
+     
+    bag_capacity_left = bag_capacity
+    cake, _ = sorted_cakes.pop()
+    while bag_capacity_left > 0 or sorted_cakes:
+        weight = cake[0]
+        price  = cake[1] 
+        if bag_capacity_left - weight < 0:
+            cake, _ = sorted_cakes.pop()
+        else:
+            bag_capacity_left -= weight
+            value_in_bag += price
+        
+    return value_in_bag
+
+test_list = [(7, 160), (3, 90), (2, 15)]
+test_c = 20
+
+print(max_duffel_bag_value(test_list, test_c))

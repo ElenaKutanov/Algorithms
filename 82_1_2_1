@@ -1,0 +1,60 @@
+# Для двух строк напишите метод, определяющий, является ли одна строка
+#перестановкой другой.
+
+import unittest
+
+def is_transposal(string_1, string_2):
+    result = False
+    
+    if len(string_1) != len(string_2):
+        return result
+
+    count = Counter()
+    for i, j in zip(string_1, string_2):
+        symbols[i] = symbols.get(i, 0) + 1
+        symbols[j] = symbols.get(j, 0) - 1
+
+    for key in symbols:
+        if symbols[key] != 0:
+            return result
+
+    result = True
+    return result
+
+# 1 Определение: это та же строка,но символы в таком же или изменённом порядке
+# 84 O(2N)  = O(N)
+# 122 Да, я испльзую хэш-таблицу
+# 131 Да, можно привести к одному порядку, это выполняет словарь...
+
+# Aftrework. Use Counter and save key-check!
+
+from collections import Counter
+
+def is_transposal_a(string_1, string_2):
+    result = False
+    
+    if len(string_1) != len(string_2):
+        return result
+
+    count = Counter()
+    for s in string_1:
+        count[s] += 1
+
+    for s in string_2:
+        if count[s] == 0:
+            return result
+        count[s] -= 1
+
+    result = True
+    return result
+
+class Test(unittest.TestCase):
+    true = 'qwerty', 'qetyrw'
+    false = 'qwerty', 'qwerto'
+
+    def test_transposal(self):
+        self.assertTrue(is_transposal_a(*self.true))
+        self.assertFalse(is_transposal_a(*self.false))
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,57 @@
+s_true  = 'weufhk'
+s_false = 'weufhklsw'
+
+# without additional structures
+def isUnique(s):
+    for i in range(len(s)-1):
+        for j in range(i+1, len(s)):
+            if s[i] == s[j]:
+                return False
+    return True
+        
+print(isUnique(s_false))
+print(isUnique(s_true))
+
+# 44
+
+def isUnique_44(s):
+    return len(set(s)) == len(s)
+
+print(isUnique_44(s_false))
+print(isUnique_44(s_true))
+
+# 117 - NO
+
+# 132 - Yes, it is yet O(NlogN)
+
+# Afterwork
+import unittest
+
+def unique(string):
+    result = False
+    
+    if len(string) >= 128: # Assume it's ASCII
+        return result
+
+    char_set = [False]*128
+    for s in string:
+        i = ord(s)
+        if char_set[i]:
+            return result
+        char_set[i] = True
+
+    result = True
+    return result
+
+class Test(unittest.TestCase):
+    true  = ['weufhk', '12nrt', '']
+    false = ['weufhklsw', 'ww', '12ytrqr', ' (f )']
+
+    def test_unique(self):
+        for test_string in self.true:
+            self.assertTrue(unique(test_string))
+        for test_string in self.false:
+            self.assertFalse(unique(test_string))
+            
+if __name__ == '__main__':
+    unittest.main()

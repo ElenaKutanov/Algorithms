@@ -1,0 +1,30 @@
+#Реализуйте метод для выполнения простейшего сжатия строк с использованием
+# счетчика повторяющихся символов. Например, строка aabcccccaaa превращается
+# в a2b1c5a3. Если «сжатая» строка не становится короче исходной,
+# Вопросы﻿собеседования 83 то метод возвращает исходную строку. Предполагается,
+# что строка состоит только из букв верхнего и нижнего регистра (a—z).
+# Подсказки: 92, 110
+
+def compression(string):
+
+    if len(string) < 2:
+        return string
+
+    counter = 0
+    compressed = []
+
+    for i in range(len(string)):
+        if i !=0 and string[i-1] != string[i]:
+            compressed.append(string[i-1] + str(counter))
+            counter = 0
+        counter += 1
+        
+    # last
+    compressed.append(string[i-1] + str(counter))
+
+    return min(string, ''.join(compressed), key=len)
+
+print('a2b1c5a3' == compression('aabcccccaaa'))
+print(compression('aabcccccaaa'))
+print('abcdef' == compression('abcdef'))
+print(compression('abcdef'))

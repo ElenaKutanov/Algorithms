@@ -1,0 +1,65 @@
+# Напишите метод, заменяющий все пробелы в строке символами '%20'.
+# Можете считать, что длина строки позволяет сохранить дополнительные символы,
+# а фактическая длина строки известна заранее.
+
+# Пример:
+# Ввод: "Mr John Smith ", 13 Вывод: "Mr%20John%20Smith"
+# Подсказки: 53, 118
+
+def replace_space(string):
+    return string.replace(' ', '%20')
+
+string = 'Mr John Smith '
+#print(replace_space(string))
+
+# Afterwork 1
+
+def replace_space_1(string):
+    new_string = ''
+
+    for i in range(len(string)-1, -1, -1):
+        if string[i] == ' ':
+            new_string = '%20' + new_string
+        else:
+            new_string = string[i] + new_string
+        
+    return new_string
+
+print(replace_space_1(string))
+
+# Afterwork 2. In place!
+
+def replace_space_2(string, length):
+
+    new_index = len(string)
+
+    for i in range(length-1, -1, -1):
+        print(i)
+        if string[i] == ' ':
+            string[new_index-3:new_index] = '%20'
+            new_index -= 3
+        else:
+            string[new_index - 1] = string[i]
+            new_index -= 1
+        
+    return string
+
+#print(replace_space_2(string, 13))
+
+import unittest
+
+class Test(unittest.TestCase):
+    '''Test Cases'''
+    # Using lists because Python strings are immutable
+    data = [
+        (list('much ado about nothing      '), 22,
+         list('much%20ado%20about%20nothing')),
+        (list('Mr John Smith    '), 13, list('Mr%20John%20Smith'))]
+
+    def test_urlify(self):
+        for [test_string, length, expected] in self.data:
+            actual = replace_space_2(test_string, length)
+            self.assertEqual(actual, expected)
+
+if __name__ == "__main__":
+    unittest.main()

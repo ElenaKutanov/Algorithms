@@ -1,0 +1,33 @@
+# Допустим, что существует метод isSubstring, проверяющий,
+# является ли одно слово подстрокой другого. Для двух строк s1 и s2 напишите код,
+# который проверяет, получена ли строка s2 циклическим сдвигом s1,
+# используя только один вызов метода isSubstring (пример: слово waterbottle
+# получено циклическим сдвигом erbottlewat).
+# Подсказки: 34, 88, 104
+
+def isCircle(s1, s2):
+    if s1 == s2:
+        return True
+
+    if len(s1) == len(s2) != 0:
+        return (s1*2).find(s2) != -1
+
+    return False
+
+import unittest
+
+class Test(unittest.TestCase):
+    '''Test Cases'''
+    data = [
+        ('waterbottle', 'erbottlewat', True),
+        ('foo', 'bar', False),
+        ('foo', 'foofoo', False)
+    ]
+
+    def test_string_rotation(self):
+        for [s1, s2, expected] in self.data:
+            actual = isCircle(s1, s2)
+            self.assertEqual(actual, expected)
+
+if __name__ == "__main__":
+    unittest.main()

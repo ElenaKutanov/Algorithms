@@ -1,0 +1,52 @@
+#Реализуйте алгоритм для нахождения в односвязном списке k-го элемента
+# с конца.
+# Подсказки: 8, 25, 41, 67, 126
+
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.current_node = None
+        self.root = None
+
+    def generate(self, values):
+        for value in values:
+            node = Node(value)
+            if self.current_node:
+                self.current_node.next = node
+            else:
+                self.root = node
+            self.current_node = node
+
+    def root(self):
+        return self.root
+
+ll = LinkedList()
+ll.generate([1, 2, 3, 1, 1, 3, 4])
+
+print(ll.root.data)
+print(ll.root.next.data)
+print(ll.root.next.next.data)
+print(ll.root.next.next.next.data)
+print('---------------------------')
+
+def find(root, number):
+    runner_k = root
+    runner_end = root
+
+    for _ in range(number):
+        if not runner_end.next:
+            # The linked list is to short
+            return
+        runner_end = runner_end.next
+
+    while runner_end.next:
+        runner_k   = runner_k.next
+        runner_end = runner_end.next
+
+    return runner_k
+
+print(find(ll.root, 5).data)

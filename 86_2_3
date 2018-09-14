@@ -1,0 +1,73 @@
+# Реализуйте алгоритм, удаляющий узел из середины односвязного списка (то есть узла, не являющегося ни начальным, ни конечным — не обязательно на- ходящегося точно в середине). Доступ предоставляется только к этому узлу.
+# Пример:
+# Ввод: узел c из списка a->b->c->d->e->f
+# Вывод: ничего не возвращается, но новый список имеет вид: a->b->d->e->f
+# Подсказки: 72
+
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.current_node = None
+        self.root = None
+
+    def generate(self, values):
+        for value in values:
+            node = Node(value)
+            if self.current_node:
+                self.current_node.next = node
+            else:
+                self.root = node
+            self.current_node = node
+
+    def root(self):
+        return self.root
+
+ll = LinkedList()
+ll.generate([1, 2, 3, 4, 5])
+
+# 1, 2, 3
+# 1, 3, 5
+
+#ll.generate([1, 2, 3, 4])
+
+# 1, 2
+# 1, 3
+
+print(ll.root.data)
+print(ll.root.next.data)
+print(ll.root.next.next.data)
+print(ll.root.next.next.next.data)
+print('---------------------------')
+
+def del_mid(ll):
+    if not ll.root:
+        return
+
+    if not ll.root.next or not ll.root.next.next:
+        ll.root = None
+        return
+    
+    pre_node = ll.root
+    mid_node = ll.root
+    end_node = ll.root
+
+    while end_node and end_node.next and end_node.next.next:
+        pre_node = mid_node
+        mid_node = mid_node.next
+        end_node = end_node.next.next
+
+    pre_node.next = mid_node.next
+
+del_mid(ll)
+
+print(ll.root.data)
+print(ll.root.next.data)
+print(ll.root.next.next.data)
+print(ll.root.next.next.next.data)
+    
+
+    

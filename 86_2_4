@@ -1,0 +1,99 @@
+# Напишите код для разбиения связного списка вокруг значения x,
+# так чтобы все узлы, меньшие x, предшествовали узлам, большим или равным x.
+# Если x содержится в списке, то значения x должны следовать строго после
+# элементов, меньших x (см. далее). Элемент разбивки x может находиться
+# где угодно в «правой части»; он не обязан располагаться между левой и правой частью.
+#Пример:
+#Ввод: 3->5->8->5->2->1 [значение разбивки = 5] Вывод: 3->1->2->5->5->8
+#Подсказки: 3, 24
+
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.current_node = None
+        self.root = None
+
+    def generate(self, values):
+        for value in values:
+            node = Node(value)
+            self.add(node)
+
+    def add(self, node):
+        if self.current_node:
+            self.current_node.next = node
+        else:
+            self.root = node
+        self.current_node = node
+
+    def root(self):
+        return self.root
+
+ll = LinkedList()
+ll.generate([8, 5, 1, 4, 5])
+
+def print_list(ll):
+    node = ll.root
+    while node:
+        print(node.data)
+        node = node.next
+print_list(ll)
+print('---------------------------')
+
+def break_list(ll, value):
+    if not ll or not ll.root or not ll.root.next:
+        return
+
+    cur_node = ll.root
+
+    min_list = LinkedList()
+    value_list  = LinkedList()
+    max_list = LinkedList()
+
+    while cur_node:
+        next_node = cur_node.next
+        cur_node.next = None
+        if cur_node.data > value:
+            max_list.add(cur_node)
+        elif cur_node.data == value:
+            value_list.add(cur_node)
+        else:
+            min_list.add(cur_node)
+            print('data:', cur_node.data)
+        cur_node = next_node
+
+    print('min_list')
+    print_list(min_list)
+    print('value_list')
+    print_list(value_list)
+    print('max_list')
+    print_list(max_list)
+
+    new_list = LinkedList()
+
+    def add_list(node):
+        while node:
+            new_list.add(node)
+            node = node.next
+
+    if min_list.root:
+        add_list(min_list.root)
+    if value_list.root:
+        add_list(value_list.root)
+    if max_list.root:
+        add_list(max_list.root)
+
+    print('new_list')
+    print_list(new_list)
+
+    return new_list
+
+broke_list = break_list(ll, 5)
+
+print('broke_list')
+print_list(broke_list)
+
+    

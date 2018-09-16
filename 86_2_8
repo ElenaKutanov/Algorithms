@@ -1,0 +1,108 @@
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+class LinkedList:
+    def __init__(self):
+        self.current_node = None
+        self.head = None
+        self.__length = 0
+
+    def generate(self, values):
+        for value in values:
+            node = Node(value)
+            self.add(node)
+
+    def add(self, node):
+        if self.current_node:
+            self.current_node.next = node
+        else:
+            self.head = node
+        self.current_node = node
+        self.__length += 1
+
+    def head(self):
+        return self.head
+
+    def tail(self):
+        return self.current_node
+
+    def __len__(self):
+        return self.__length
+
+def print_list(ll):
+    node = ll.head
+    while node:
+        print(node.data)
+        node = node.next
+
+# Для кольцевого связного списка реализуйте алгоритм,
+# возвращающий начальный узел петли.
+# Определение
+# Кольцевой связный список — это связный список,
+# в котором указатель следующего узла ссылается на более ранний узел,
+# образуя петлю.
+# Пример:
+# Ввод: A->B->C->D->E->C (предыдущий узел C) Вывод: C
+# Подсказки: 50, 69, 83, 90
+
+def get_start_node(ll):
+    slow, fast = ll.head.next, ll.head.next.next
+    print('1:', slow.data)
+
+    # 1
+    while fast != slow:
+        slow = slow.next
+        fast = fast.next.next
+        print('1:', slow.data)
+
+    # 2
+    slow = slow.next
+    count = 1
+    while slow != fast:
+        print('2:', slow.data)
+        slow = slow.next
+        count += 1
+    print('count:', count)
+
+    # 3
+    start_node, end_node = ll.head, ll.head
+    print('init, start_node:', start_node.data)
+    
+    for _ in range(count):
+        end_node = end_node.next
+
+    print('init, end_node:', end_node.data)
+
+    while start_node != end_node:
+        start_node, end_node = start_node.next, end_node.next
+        print('3, end_node:', end_node.data)
+        print('3, start_node:', start_node.data)
+
+    return start_node
+       
+ll = LinkedList()
+n5 = Node('E')
+n4 = Node('D')
+n4.next = n5
+n3 = Node('C')
+n3.next = n4
+n5.next = n3 # ! circle
+n2 = Node('B')
+n2.next = n3
+n1 = Node('A')
+n1.next = n2
+ll.add(n1)
+ll.add(n2)
+ll.add(n3)
+ll.add(n4)
+ll.add(n5)
+
+# print_list(ll)
+
+print(get_start_node(ll).data)
+

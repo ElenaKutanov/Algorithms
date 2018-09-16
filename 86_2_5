@@ -1,0 +1,76 @@
+# Два числа хранятся в виде связных списков, в которых каждый узел представляет
+# один разряд. Все цифры хранятся в обратном порядке, при этом младший разряд
+# (единицы) хранится в начале списка. Напишите функцию, которая суммирует два
+# числа и возвращает результат в виде связного списка.
+#Вопросы﻿собеседования 87 Ввод: (7->1->6) + (5->9->2), то есть 617 + 295.
+# Вывод: 2->1->9, то есть 912.
+# Дополнительно
+# Решите задачу, предполагая, что цифры записаны в прямом порядке. Ввод: (6->1->7) + (2->9->5), то есть 617 + 295.
+# Вывод: 9->1->2, то есть 912.
+# Подсказки: 7, 30, 71, 95, 109
+
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.current_node = None
+        self.root = None
+
+    def generate(self, values):
+        for value in values:
+            node = Node(value)
+            self.add(node)
+
+    def add(self, node):
+        if self.current_node:
+            self.current_node.next = node
+        else:
+            self.root = node
+        self.current_node = node
+
+    def root(self):
+        return self.root
+
+ll1 = LinkedList()
+ll1.generate([7, 1, 6])
+ll2 = LinkedList()
+ll2.generate([5, 9, 2])
+
+def print_list(ll):
+    node = ll.root
+    while node:
+        print(node.data)
+        node = node.next
+        
+print('ll1:')
+print_list(ll1)
+print('ll2:')
+print_list(ll2)
+
+def sum_ll(ll1, ll2):
+    result = LinkedList()
+    node1, node2 = ll1.root, ll2.root
+
+    add_one = 0
+
+    while node1 or node2:
+        temp_sum = add_one
+        if node1:
+            temp_sum += node1.data
+            node1 = node1.next
+        if node2:
+            temp_sum += node2.data
+            node2 = node2.next
+        result.add(Node(temp_sum%10))
+        add_one = temp_sum // 10
+
+    if add_one:
+        result.add(Node(add_one))
+
+    return result
+
+print('sum:')
+print_list(sum_ll(ll1, ll2))

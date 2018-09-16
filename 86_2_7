@@ -1,0 +1,77 @@
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+class LinkedList:
+    def __init__(self):
+        self.current_node = None
+        self.head = None
+        self.__length = 0
+
+    def generate(self, values):
+        for value in values:
+            node = Node(value)
+            self.add(node)
+
+    def add(self, node):
+        if self.current_node:
+            self.current_node.next = node
+        else:
+            self.head = node
+        self.current_node = node
+        self.__length += 1
+
+    def head(self):
+        return self.head
+
+    def tail(self):
+        return self.current_node
+
+    def __len__(self):
+        return self.__length
+
+def print_list(ll):
+    node = ll.head
+    while node:
+        print(node.data)
+        node = node.next
+
+ll1 = LinkedList()
+ll1.generate([7, 1, 6, 1, 7, 2])
+ll2 = LinkedList()
+ll2.generate([8, 1, 7, 2])
+
+# Проверьте, пересекаются ли два заданных (одно-)связных списка.
+# Верните узел пересечения. Учтите, что пересечение определяется ссылкой,
+# а не значением. Иначе говоря, если k-й узел первого связного списка
+# точно совпадает (по ссылке) с j-м узлом второго связного списка,
+# то списки считаются пересекающимися.
+# Подсказки: 20, 45, 55, 65, 76, 93, 111, 120, 129
+
+def intersection_node(ll1, ll2):
+    if ll1.tail() != ll2.tail():
+        return False, None
+
+    shorter = ll1 if len(ll1) < len(ll2) else ll2
+    longer = ll2 if len(ll1) < len(ll2) else ll1
+
+    diff = len(longer) - len(shorter)
+
+    shorter_node, longer_node = shorter.head, longer.head
+
+    for _ in range(diff):
+        longer_node = longer_node.next
+        
+    while shorter_node != longer_node:
+        shorter_node, longer_node = shorter_node.next, longer_node.next
+
+    return True, shorter_node
+
+intersected, node = intersection_node(ll1, ll2)
+print(intersected)
+if intersected:
+    print(node.data)

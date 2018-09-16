@@ -1,0 +1,77 @@
+#Реализуйте функцию, проверяющую, является ли связный список палин- дромом.
+# Подсказки: 5, 13, 29, 61, 101
+
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.current_node = None
+        self.head = None
+
+    def generate(self, values):
+        for value in values:
+            node = Node(value)
+            self.add(node)
+
+    def add(self, node):
+        if self.current_node:
+            self.current_node.next = node
+        else:
+            self.head = node
+        self.current_node = node
+
+    def head(self):
+        return self.head
+
+ll1 = LinkedList()
+ll1.generate([7, 1, 6, 1, 7])
+ll2 = LinkedList()
+ll2.generate([5, 9, 2])
+ll3 = LinkedList()
+ll3.generate([5, 9, 2, 2, 9, 5])
+
+def print_list(ll):
+    node = ll.head
+    while node:
+        print(node.data)
+        node = node.next
+
+def is_palindrome(ll):
+    mid_node, end_node = ll.head, ll.head
+
+    stack = []
+
+    while end_node and end_node.next:
+        stack.append(mid_node.data)
+        mid_node = mid_node.next
+        end_node = end_node.next.next
+
+    # Afterwork. It's beatuful way to ger over odd number of elements
+    if end_node:
+        mid_node = mid_node.next
+
+    print('stack:', stack)
+            
+    while mid_node:
+        value = stack.pop()
+        print('value:', value)
+        print('mid:', mid_node.data)
+        if value != mid_node.data:
+            return False
+        
+        mid_node = mid_node.next
+            
+    return True
+            
+print('ll1:')
+print_list(ll1)
+print(is_palindrome(ll1))
+print('ll2:')
+print_list(ll2)
+print(is_palindrome(ll2))
+print('ll3:')
+print_list(ll3)
+print(is_palindrome(ll3))

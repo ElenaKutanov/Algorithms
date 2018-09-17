@@ -1,0 +1,46 @@
+# Как реализовать стек, в котором кроме стандартных функций push и pop
+# будет поддерживаться функция min, возвращающая минимальный элемент?
+# Все операции — push, pop и min — должны выполняться за время O(1).
+# Подсказки: 27, 59, 78
+
+class Stack:
+    def __init__(self):
+        self.__stack = []
+        self.__min = None
+
+    def pop(self):
+        if not self.__stack:
+            raise Exception('The stack is empty')
+        return self.__stack.pop()[0]
+        
+
+    def push(self, value):
+        if not self.__min or self.__min > value:
+            self.__min = value
+        self.__stack.append((value, self.__min))
+        
+    def min(self):
+        return self.__stack[-1][1]
+
+def StackMin():
+    newstack = Stack()
+    newstack.push(5)
+    newstack.push(6)
+    newstack.push(3)
+    newstack.push(7)
+    newstack.push(14)
+    newstack.push(2)
+    print(newstack.min())
+    newstack.push(1)
+    newstack.push(4)
+    newstack.push(44)
+    newstack.push(2)
+    print(newstack.min())
+    newstack.pop()
+    newstack.pop()
+    newstack.pop()
+    newstack.pop()
+    newstack.pop()
+    print(newstack.min())
+
+StackMin()

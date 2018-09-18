@@ -1,0 +1,57 @@
+# Как известно, слишком высокая стопка тарелок может развалиться.
+# Следовательно, в реальной жизни, когда высота стопки превысила бы некоторое пороговое значение,
+# мы начали бы складывать тарелки в новую стопку. Реализуйте структуру данных SetOfStacks,
+# имитирующую реальную ситуацию. Структура SetOfStack должна состоять из нескольких стеков, новый стек создается,
+# как только предыдущий достигнет порогового значения. Методы SetOfStacks.push() и SetOfStacks.pop()
+# должны вести себя так же, как при работе с одним стеком (то есть метод pop() должен возвращать те же значения,
+# которые бы он возвращал при использовании одного большого стека).
+# Дополнительно
+# Реализуйте функцию popAt(int index), которая осуществляет операцию pop с заданным внутренним стеком.
+# Подсказки: 64, 81
+
+class SetOfStacks:
+    def __init__(self):
+        self.__setOfStacks = []
+        self.__size = 10
+        self.__index = -1
+        
+    def push(self, value):
+        self.__index += 1
+        print('index:', self.__index)
+        if not self.__setOfStacks or self.__index%self.__size == self.__size - 1:
+            self.__setOfStacks.append([0]*self.__size)
+        self.__setOfStacks[self.__index//self.__size][self.__index % self.__size] = value
+        print('push:', self.__setOfStacks)
+
+    def pop(self):
+        if not self.__setOfStacks:
+            raise Exception('The stack is empty!')
+        value = self.__setOfStacks[self.__index//self.__size][self.__index % self.__size]
+        self.__setOfStacks[self.__index // self.__size][self.__index % self.__size] = 0
+        if self.__index % self.__size == self.__size - 1:
+            self.__setOfStacks.pop()
+        self.__index -= 1
+        print('pop:', self.__setOfStacks)
+        return value
+
+    def popAt(self, index):
+        if index > self.__index:
+            return None
+        value = self.__setOfStacks[index // self.__size][index % self.__size]
+        for i in range(index, self.__index):
+            self.__setOfStacks[i // self.__size][i % self.__size], self.__setOfStacks[(i+1) // self.__size][(i+1) % self.__size] \
+                = self.__setOfStacks[(i+1) // self.__size][(i+1) % self.__size], 0
+        self.__index -= 1
+        print('popAt:', self.__setOfStacks)
+        return value
+
+if __name__ == '__main__':
+    stack = SetOfStacks()
+    for i in range(1, 12):
+        stack.push(i)
+    stack.pop()
+    stack.push(1)
+    stack.push(2)
+    print(stack.popAt(3))
+    for _ in range(10):
+        print(stack.pop())
